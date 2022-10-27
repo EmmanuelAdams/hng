@@ -1,10 +1,10 @@
-const express = require('express');
+import express from 'express';
 
 const main = () => {
   const app = express();
-  const PORT = 4000;
+  const PORT = process.env.PORT || 4000;
 
-  app.get('/', (req, res) => {
+  app.get('/data', (_req, res) => {
     res.json([
       {
         slackUsername: 'Emmy',
