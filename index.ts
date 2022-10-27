@@ -4,7 +4,7 @@ const main = () => {
   const app = express();
   const PORT = process.env.PORT || 4000;
 
-  app.get('/data', (_req, res) => {
+  app.get('/', (_req, res) => {
     res.json([
       {
         slackUsername: 'Emmy',
