@@ -31,13 +31,13 @@ const main = () => {
         slackUsername: mySlackUsername,
         operation_type:
           req.body.operation_type === 'subtraction'
-            ? `Enum.${Enum.subtraction}`
+            ? Enum.subtraction
             : 'null' &&
               req.body.operation_type === 'addition'
-            ? `Enum.${Enum.addition}`
+            ? Enum.addition
             : 'null' &&
               req.body.operation_type === 'multiplication'
-            ? `Enum.${Enum.multiplication}`
+            ? Enum.multiplication
             : 'null',
         result:
           req.body.operation_type === 'subtraction'
