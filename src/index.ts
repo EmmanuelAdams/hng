@@ -1,6 +1,7 @@
 import express from 'express';
 import * as dotenv from 'dotenv';
 import { mySlackUsername } from './utils/constants';
+
 const OpenAI = require('openai-api');
 
 const main = () => {
@@ -13,30 +14,6 @@ const main = () => {
     subtract = 'subtraction',
     multiply = 'multiplication',
   }
-
-  // Load your key from an environment variable or secret management service
-  // (do not include your key directly in your code)
-
-  // start
-  // const { Configuration, OpenAIApi } = require('openai');
-
-  // const configuration = new Configuration({
-  //   apiKey: process.env.OPENAI_API_KEY,
-  // });
-  // const openai = new OpenAIApi(configuration);
-
-  // const response = async () =>
-  //   await openai.createCompletion({
-  //     model: 'text-davinci-002',
-  //     prompt:
-  //       'Can you please add the following numbers together - 13 and 25?\n\nThe answer is 38.', // This is where i want the question from the user to be,
-  //     temperature: 0.7,
-  //     max_tokens: 256,
-  //     top_p: 1,
-  //     frequency_penalty: 0,
-  //     presence_penalty: 0,
-  //   });
-  //  end
 
   app.use(express.json());
   app
@@ -71,7 +48,7 @@ const main = () => {
       });
     });
 
-  app.post('/random', (req, res) => {
+  app.post('/randomQuestion', (req, res) => {
     const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
     const openai = new OpenAI(OPENAI_API_KEY);
 
@@ -79,15 +56,15 @@ const main = () => {
       const gptResponse = await openai.complete({
         engine: 'text-davinci-002',
         prompt: req.body.prompt,
-        temperature: 0.7,
+        temperature: 0.8,
         top_p: 1,
         frequency_penalty: 0,
         presence_penalty: 0,
       });
 
-      console.log(gptResponse.data.choices[0].text);
+      console.log(gptResponse.data.choices[0].text.trim());
       res.json({
-        answer: gptResponse.data.choices[0].text,
+        answer: gptResponse.data.choices[0].text.trim(),
       });
     })();
   });
