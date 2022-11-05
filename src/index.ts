@@ -9,11 +9,11 @@ const main = () => {
   const app = express();
   const PORT = process.env.PORT || 4000;
 
-  enum OperationType {
-    add = 'addition',
-    subtract = 'subtraction',
-    multiply = 'multiplication',
-  }
+  const Enum = {
+    addition: 'addition',
+    subtraction: 'subtraction',
+    multiplication: 'multiplication',
+  };
 
   app.use(express.json());
   app
@@ -30,19 +30,22 @@ const main = () => {
       res.json({
         slackUsername: mySlackUsername,
         operation_type:
-          req.body.operation_type === '-'
-            ? OperationType.subtract
-            : 'null' && req.body.operation_type === '+'
-            ? OperationType.add
-            : 'null' && req.body.operation_type === '*'
-            ? OperationType.multiply
+          req.body.operation_type === 'subtraction'
+            ? `Enum.${Enum.subtraction}`
+            : 'null' &&
+              req.body.operation_type === 'addition'
+            ? `Enum.${Enum.addition}`
+            : 'null' &&
+              req.body.operation_type === 'multiplication'
+            ? `Enum.${Enum.multiplication}`
             : 'null',
         result:
-          req.body.operation_type === '-'
+          req.body.operation_type === 'subtraction'
             ? req.body.x - req.body.y
-            : '' || req.body.operation_type === '+'
+            : '' || req.body.operation_type === 'addition'
             ? req.body.x + req.body.y
-            : '' || req.body.operation_type === '*'
+            : '' ||
+              req.body.operation_type === 'multiplication'
             ? req.body.x * req.body.y
             : '',
       });
